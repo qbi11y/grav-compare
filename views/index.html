@@ -1,3 +1,228 @@
 <div class="container">
-    Prototype Index Page Here
+    <div class="row">
+        <div class="col-xs-12 text-right">
+            <button class="btn btn-success" data-toggle="modal" data-target="#wizardModal">Add Application</button>
+            <button class="btn btn-primary">Import</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            Filters 
+        </div>
+        <div class="col-xs-9">
+            <div class="row" ng-repeat="app in applications">
+                 <div class="col-xs-3">
+                    <div>icon</div>
+                    <div>
+                        <!-- Single button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Go To Configurations</a></li>
+                                <li><a href="#">View Comparison Reports</a></li>
+                                <li><a href="#">View Detailed Description</a></li>
+                                <li><a href="#"><span class="text-success">Duplicate</span></a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Export To File</a></li>
+                                <li><a href="#">Delete</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-xs-9"><a ui-sref="application({id:app.id})">{{ app.name }}</a></div>
+             </div> 
+        </div>
+    </div>
+
+    <!-- Wizard Modal -->
+    <div class="modal fade" id="wizardModal" tabindex="-1" role="dialog" aria-labelledby="wizardModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-wizard">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="wizardModalLabel">Add Application</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <ul class="nav nav-pills nav-stacked text-nowrap">
+                                <li role="presentation"><a href="#">Information<i class="fa fa-chevron-right"></i></a></li>
+                                <li role="presentation"><a href="#">Environments<i class="fa fa-chevron-right"></i></a></li>
+                                <li role="presentation"><a href="#">Configure Servers<i class="fa fa-chevron-right"></i></a></li>
+                                <li role="presentation"><a href="#">Configure Storage<i class="fa fa-chevron-right"></i></a></li>
+                                <li role="presentation"><a href="#">Configure Networks<i class="fa fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-9" ng-init="currentStep = 1">
+                            <div id="wizardStep1" ng-show="currentStep == 1">
+                                <h2 class="step-title text-primary">Information</h2>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" value="new" checked ng-model="newApplication" ng-init="newApplication = 'new'">
+                                        Create new blank application
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" value="existing" ng-model="newApplication">
+                                        Create application based on existing application
+                                    </label>
+                                </div>
+                                <div ng-show="newApplication == 'new'">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Enter Application Name" class="form-control" ng-model="application.name">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" ng-model="application.description"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Enter Number of Environments" class="form-control" ng-model="application.environments">
+                                        <p class="help-block">Description and example of what an environment is</p>
+                                    </div>
+                                </div>
+                                <div ng-show="newApplication == 'existing'">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="application.duplicate" ng-init="application.duplicate = '0'">
+                                            <option value="0">Select Existing Application</option>
+                                            <option value="1">Application 1</option>
+                                            <option value="2">Application 2</option>
+                                            <option value="3">Application 3</option>
+                                        </select>
+                                    </div>
+                                    <div ng-show="application.duplicate != 0">
+                                        Information about application {{ application.application }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="wizardStep2" ng-show="currentStep == 2">
+                                <h2 class="step-title text-primary">Environments</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam nisi molestiae voluptatem quaerat porro vel nostrum aperiam explicabo enim ea debitis quibusdam necessitatibus velit, est sit, voluptates modi. Molestiae, tenetur.</p>
+                                
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3>How Many Resources?</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis sunt omnis id laboriosam assumenda suscipit quasi odio labore aperiam, quisquam magni nisi! Incidunt maiores animi adipisci iste ea, voluptatem tempora.</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div>Servers</div>
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.qty">
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div>Storage</div>
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.qty">
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div>Networks</div>
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.networks.qty">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="wizardStep3" ng-show="currentStep == 3">
+                                <h2 class="step-title text-primary">Environment - Servers</h2>
+                                <p>All servers will have the same configurations. If you would like them to have different configurations complete the application creation and process then edit the newly created application.</p>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h3>Compute</h3>
+                                        <div class="form-group">
+                                            <label>Number of Cores</label>
+                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.cores">
+                                        </div> 
+                                        <div class="form-group">
+                                            <label>GHz per Core</label>
+                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.cycles">
+                                        </div> 
+                                        <div class="form-group">
+                                            <label>RAM</label>
+                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.ram">
+                                        </div> 
+                                        <div class="form-group">
+                                            <label>Local Disk</label>
+                                            <input type="text" placeholder="" class="form-control"  ng-model="application.resources.servers.localDisk">
+                                        </div> 
+                                        <div class="form-group">
+                                            <select name="" id="" class="form-control" ng-model="application.resources.servers.os">
+                                                <option value="0">Select Operating System</option>
+                                                <option value="1">OS 1</option>
+                                                <option value="2">OS 2</option>
+                                                <option value="3">OS 3</option>
+                                            </select>
+                                        </div>                                        
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h3>Usage</h3>
+                                        <div class="form-group">
+                                            <label>Compute Mapping Factor</label>
+                                            <input type="text" placeholder="" class="form-control"  ng-model="application.resources.servers.mappingFactor">
+                                        </div>  
+                                        <div class="form-group">
+                                            <label>Total Usage Term (Months)</label>
+                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.usage.total">
+                                        </div>  
+                                        <div class="form-group">
+                                            <label>Monthly Usage (Days a Month)</label>
+                                            <input type="text" placeholder="" class="form-control"ng-model="application.resources.servers.usage.monthly">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Daily Usage (Hours a Day)</label>
+                                            <input type="text" placeholder="" class="form-control"ng-model="application.resources.servers.usage.daily">
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="wizardStep4" ng-show="currentStep == 4">
+                                <h2 class="step-title text-primary">Environment - Storage</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis perferendis, odio repellendus ipsum atque quod unde nisi, impedit totam minima. Sed quae impedit eligendi ab. Accusamus quo dolor sequi aliquid!</p>
+                                    <div class="form-group">
+                                        <label>Shared Storage (GB)</label>
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.shared">
+                                    </div>  
+                                    <div class="form-group">
+                                        <label>Network Storage (GB)</label>
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.network">
+                                    </div>  
+                                    <div class="form-group">
+                                        <label>Cloud Storage (GB)</label>
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.cloud">
+                                    </div>                                       
+                            
+                            </div>
+                            <div id="wizardStep5" ng-show="currentStep == 5">
+                                <h2 class="step-title text-primary">Environment - Networks</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis perferendis, odio repellendus ipsum atque quod unde nisi, impedit totam minima. Sed quae impedit eligendi ab. Accusamus quo dolor sequi aliquid!</p>
+                                    <div class="form-group">
+                                        <label>Bandwidth (GB/Month)</label>
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.network.bandwidth">
+                                    </div>  
+                                    <div class="form-group">
+                                        <label>Inbound (GB/Month)</label>
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.network.inbound">
+                                    </div>  
+                                    <div class="form-group">
+                                        <label>Outbound (GB/Month)</label>
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.network.outbound">
+                                    </div>                                       
+                            </div>
+                            <div id="wizardStep6" ng-show="currentStep == 6">
+                                <h2 class="step-title text-primary">Summary</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis perferendis, odio repellendus ipsum atque quod unde nisi, impedit totam minima. Sed quae impedit eligendi ab. Accusamus quo dolor sequi aliquid!</p>
+
+                                {{ application }}                                                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default text-primary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default text-primary"><i class="fa fa-chevron-left"></i>&nbsp;Back</button>
+                    <button type="button" class="btn btn-primary" ng-show="currentStep != 6" ng-click="currentStep = currentStep + 1">Next&nbsp;<i class="fa fa-chevron-right"></i></button>
+                    <button type="button" class="btn btn-primary" ng-show="currentStep == 6" data-dismiss="modal" ng-click="createApplication(application)">Finished</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
