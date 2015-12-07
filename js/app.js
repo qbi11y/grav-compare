@@ -1,16 +1,14 @@
-var app = angular.module('AppName',['Controllers', 'ui.router']);
+var app = angular.module('AppName', ['ngRoute', 'Controllers']);
 
-app.config(function($stateProvider, $urlRouterProvider) {
-  //
-  // For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise("/");
-  //
-  // Now set up the states
-  $stateProvider
-    .state('state1', {
-      url: "/",
-      templateUrl: "views/state1.html",
-      controller: 'StateController'
-    });
-});
+app.config(['$routeProvider', function($routeProvider) {
+    $routeProvider
+        .when('/', {
+            templateUrl: 'views/index.html',
+            controller: 'IndexController'
+        })
+        .when('/view1', {
+            templateUrl: 'views/view1.html',
+            controller: 'ViewController'
+        })
+}]);
 

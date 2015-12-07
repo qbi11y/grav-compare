@@ -1,8 +1,10 @@
 var app = angular.module('Controllers', ['Data']);
-console.log('controller.js');
 
-app.controller('StateController',['$scope', 'Data', function($scope, Data) {
-    console.log('Hello');
+app.controller('IndexController',['$scope', 'Data', function($scope, Data) {
     Data.setData(Date());
     console.log(Data.getData());
 }]);
+
+app.controller('ViewController', function() {
+    console.log('View Controller Working');
+})
