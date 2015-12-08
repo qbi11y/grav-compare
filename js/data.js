@@ -58,7 +58,11 @@ app.factory('Applications', function() {
         },
 
         setEnviro: function(d) {
-            
+            enviro = d;
+        },
+
+        getEnviro: function() {
+            return enviro
         }
     }
 })

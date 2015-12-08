@@ -14,12 +14,17 @@ app.controller('IndexCtrl',['$scope', 'Applications', function($scope, Applicati
     console.log('index');
 }]);
 
-app.controller('ApplicationCtrl', ['$scope', '$stateParams', 'Applications', function($scope, $stateParams, Applications) {
+app.controller('ApplicationCtrl', ['$scope', '$state', '$stateParams', 'Applications', function($scope, $state, $stateParams, Applications) {
     console.log(Applications.getApp($stateParams.id));
     $scope.currentStep = 1;
     $scope.application = Applications.getApp($stateParams.id);
+    $scope.showEnviro = function(enviro) {
+        console.log(enviro)
+        Applications.setEnviro(enviro)
+        $state.go('environment')
+    }
 }]);
 
 app.controller('EnviroCtrl', ['$scope', '$stateParams', 'Applications', function($scope, $stateParams, Applications) {
-    
+    console.log(Applications.getEnviro())
 }])
