@@ -4,14 +4,29 @@
             <button class="btn btn-primary" data-toggle="modal" data-target="#wizardModal">Add Environment</button>
         </div>
     </div>
-    <div class="row" ng-repeat="enviro in application.environments">
+    <h1>{{ application.name }}</h1>
+    <div class="row" ng-repeat="enviro in application.environments track by $index">
+        <div class="col-xs-10">
+            <h2><a href="" ng-click="showEnviro(enviro)">{{ enviro.name }}</a></h2>
+            <div class="row ">
+                <div class="col-xs-4" ng-repeat="(key, value) in enviro" ng-if="key != 'name'">
+                    <h4>{{ key }}</h4>
+                    <div>{{ value[0].qty }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-2 text-right">
+            <h2><a href="" ng-click="editEnvironment(enviro)" data-toggle="modal" data-target="#wizardModal"><i class="fa fa-pencil-square-o"></i></a> <a href="" ng-click="removeEnvironment(enviro)"><i class="fa fa-trash-o"></i></a></h2>
+        </div>
+    </div>
+    <!-- <div class="row" ng-repeat="enviro in application.environments track by $index">
         <div class="col-xs-12"><h1><a href="" ng-click="showEnviro(enviro)">{{ enviro.name }}</a></h1></div>            
             <div class="col-xs-4" ng-repeat="(key, value) in enviro.resources">
                 <h4>{{ key }}</h4>
                 <div>{{ value.qty }}</div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 <!-- Wizard Modal -->
 <div class="modal fade" id="wizardModal" tabindex="-1" role="dialog" aria-labelledby="wizardModalLabel" aria-hidden="true">
@@ -36,28 +51,54 @@
                         <div id="wizardStep1" ng-show="currentStep == 1">
                             <h2 class="step-title text-primary">Environment</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam nisi molestiae voluptatem quaerat porro vel nostrum aperiam explicabo enim ea debitis quibusdam necessitatibus velit, est sit, voluptates modi. Molestiae, tenetur.</p>
-                            <input type="text" placeholder="Enter Environment Name" class="form-control">
-                            
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <h3>How Many Resources?</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis sunt omnis id laboriosam assumenda suscipit quasi odio labore aperiam, quisquam magni nisi! Incidunt maiores animi adipisci iste ea, voluptatem tempora.</p>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="new" checked ng-model="newEnviro" ng-init="newEnviro = 'new'">
+                                    Create new blank environment
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="existing" ng-model="newEnviro">
+                                    Create environment based on existing environment
+                                </label>
+                            </div>
+                            <div ng-show="newEnviro == 'new'">
+                                <input type="text" placeholder="Enter Environment Name" class="form-control" ng-model="environment.name">                            
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3>How Many Resources?</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis sunt omnis id laboriosam assumenda suscipit quasi odio labore aperiam, quisquam magni nisi! Incidunt maiores animi adipisci iste ea, voluptatem tempora.</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div>Servers</div>
+                                        <input type="text" placeholder="" class="form-control" ng-model="environment.servers.qty">
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div>Storage</div>
+                                        <input type="text" placeholder="" class="form-control" ng-model="environment.storage.qty">
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div>Networks</div>
+                                        <input type="text" placeholder="" class="form-control" ng-model="environment.network.qty">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <div>Servers</div>
-                                    <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.qty">
+                            <div ng-show="newEnviro == 'existing'">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="environment.duplicate" ng-init="environment.duplicate = '0'">
+                                            <option value="0">Select Existing environment</option>
+                                            <option value="1">environment 1</option>
+                                            <option value="2">environment 2</option>
+                                            <option value="3">environment 3</option>
+                                        </select>
+                                    </div>
+                                    <div ng-show="environment.duplicate != 0">
+                                        Information about environment {{ environment.application }}
+                                    </div>
                                 </div>
-                                <div class="col-xs-4">
-                                    <div>Storage</div>
-                                    <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.qty">
-                                </div>
-                                <div class="col-xs-4">
-                                    <div>Networks</div>
-                                    <input type="text" placeholder="" class="form-control" ng-model="application.resources.networks.qty">
-                                </div>
-                            </div>
                         </div>
                         <div id="wizardStep2" ng-show="currentStep == 2">
                             <h2 class="step-title text-primary">Servers</h2>
@@ -67,22 +108,22 @@
                                         <h3>Compute</h3>
                                         <div class="form-group">
                                             <label>Number of Cores</label>
-                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.cores">
+                                            <input type="text" placeholder="" class="form-control" ng-model="environment.servers.cores">
                                         </div> 
                                         <div class="form-group">
                                             <label>GHz per Core</label>
-                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.cycles">
+                                            <input type="text" placeholder="" class="form-control" ng-model="environment.servers.cycles">
                                         </div> 
                                         <div class="form-group">
                                             <label>RAM</label>
-                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.ram">
+                                            <input type="text" placeholder="" class="form-control" ng-model="environment.servers.ram">
                                         </div> 
                                         <div class="form-group">
                                             <label>Local Disk</label>
-                                            <input type="text" placeholder="" class="form-control"  ng-model="application.resources.servers.localDisk">
+                                            <input type="text" placeholder="" class="form-control"  ng-model="environment.servers.localDisk">
                                         </div> 
                                         <div class="form-group">
-                                            <select name="" id="" class="form-control" ng-model="application.resources.servers.os">
+                                            <select name="" id="" class="form-control" ng-model="environment.servers.os">
                                                 <option value="0">Select Operating System</option>
                                                 <option value="1">OS 1</option>
                                                 <option value="2">OS 2</option>
@@ -94,19 +135,19 @@
                                         <h3>Usage</h3>
                                         <div class="form-group">
                                             <label>Compute Mapping Factor</label>
-                                            <input type="text" placeholder="" class="form-control"  ng-model="application.resources.servers.mappingFactor">
+                                            <input type="text" placeholder="" class="form-control"  ng-model="environment.servers.mappingFactor">
                                         </div>  
                                         <div class="form-group">
                                             <label>Total Usage Term (Months)</label>
-                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.usage.total">
+                                            <input type="text" placeholder="" class="form-control" ng-model="environment.servers.usage.total">
                                         </div>  
                                         <div class="form-group">
                                             <label>Monthly Usage (Days a Month)</label>
-                                            <input type="text" placeholder="" class="form-control"ng-model="application.resources.servers.usage.monthly">
+                                            <input type="text" placeholder="" class="form-control"ng-model="environment.servers.usage.monthly">
                                         </div>
                                         <div class="form-group">
                                             <label>Daily Usage (Hours a Day)</label>
-                                            <input type="text" placeholder="" class="form-control"ng-model="application.resources.servers.usage.daily">
+                                            <input type="text" placeholder="" class="form-control"ng-model="environment.servers.usage.daily">
                                         </div>                                        
                                     </div>
                                 </div>
@@ -116,15 +157,15 @@
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis perferendis, odio repellendus ipsum atque quod unde nisi, impedit totam minima. Sed quae impedit eligendi ab. Accusamus quo dolor sequi aliquid!</p>
                                     <div class="form-group">
                                         <label>Shared Storage (GB)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.shared">
+                                        <input type="text" placeholder="" class="form-control" ng-model="environment.storage.shared">
                                     </div>  
                                     <div class="form-group">
                                         <label>Network Storage (GB)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.network">
+                                        <input type="text" placeholder="" class="form-control" ng-model="environment.storage.network">
                                     </div>  
                                     <div class="form-group">
                                         <label>Cloud Storage (GB)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.cloud">
+                                        <input type="text" placeholder="" class="form-control" ng-model="environment.storage.cloud">
                                     </div>
                         </div>
                         <div id="wizardStep4" ng-show="currentStep == 4">
@@ -132,15 +173,15 @@
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis perferendis, odio repellendus ipsum atque quod unde nisi, impedit totam minima. Sed quae impedit eligendi ab. Accusamus quo dolor sequi aliquid!</p>
                                     <div class="form-group">
                                         <label>Bandwidth (GB/Month)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.network.bandwidth">
+                                        <input type="text" placeholder="" class="form-control" ng-model="environment.network.bandwidth">
                                     </div>  
                                     <div class="form-group">
                                         <label>Inbound (GB/Month)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.network.inbound">
+                                        <input type="text" placeholder="" class="form-control" ng-model="environment.network.inbound">
                                     </div>  
                                     <div class="form-group">
                                         <label>Outbound (GB/Month)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.network.outbound">
+                                        <input type="text" placeholder="" class="form-control" ng-model="environment.network.outbound">
                                     </div>
                         </div>
                         <div id="wizardStep6" ng-show="currentStep == 5">
@@ -156,7 +197,7 @@
                 <button type="button" class="btn btn-default text-primary" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-default text-primary"><i class="fa fa-chevron-left"></i>&nbsp;Back</button>
                 <button type="button" class="btn btn-primary" ng-click="currentStep = currentStep + 1">Next&nbsp;<i class="fa fa-chevron-right"></i></button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Finished</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="createEnvironment(environment)">Finished</button>
             </div>
         </div>
     </div>

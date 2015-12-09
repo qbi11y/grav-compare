@@ -110,15 +110,15 @@
                                 <div class="row">
                                     <div class="col-xs-4">
                                         <div>Servers</div>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.qty">
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.servers.qty">
                                     </div>
                                     <div class="col-xs-4">
                                         <div>Storage</div>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.qty">
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.storage.qty">
                                     </div>
                                     <div class="col-xs-4">
                                         <div>Networks</div>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.networks.qty">
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.network.qty">
                                     </div>
                                 </div>
                             </div>
@@ -130,22 +130,22 @@
                                         <h3>Compute</h3>
                                         <div class="form-group">
                                             <label>Number of Cores</label>
-                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.cores">
+                                            <input type="text" placeholder="" class="form-control" ng-model="application.servers.cores">
                                         </div> 
                                         <div class="form-group">
                                             <label>GHz per Core</label>
-                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.cycles">
+                                            <input type="text" placeholder="" class="form-control" ng-model="application.servers.cycles">
                                         </div> 
                                         <div class="form-group">
                                             <label>RAM</label>
-                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.ram">
+                                            <input type="text" placeholder="" class="form-control" ng-model="application.servers.ram">
                                         </div> 
                                         <div class="form-group">
                                             <label>Local Disk</label>
-                                            <input type="text" placeholder="" class="form-control"  ng-model="application.resources.servers.localDisk">
+                                            <input type="text" placeholder="" class="form-control"  ng-model="application.servers.localDisk">
                                         </div> 
                                         <div class="form-group">
-                                            <select name="" id="" class="form-control" ng-model="application.resources.servers.os">
+                                            <select name="" id="" class="form-control" ng-model="application.servers.os">
                                                 <option value="0">Select Operating System</option>
                                                 <option value="1">OS 1</option>
                                                 <option value="2">OS 2</option>
@@ -157,19 +157,19 @@
                                         <h3>Usage</h3>
                                         <div class="form-group">
                                             <label>Compute Mapping Factor</label>
-                                            <input type="text" placeholder="" class="form-control"  ng-model="application.resources.servers.mappingFactor">
+                                            <input type="text" placeholder="" class="form-control"  ng-model="application.servers.mappingFactor">
                                         </div>  
                                         <div class="form-group">
                                             <label>Total Usage Term (Months)</label>
-                                            <input type="text" placeholder="" class="form-control" ng-model="application.resources.servers.usage.total">
+                                            <input type="text" placeholder="" class="form-control" ng-model="application.servers.usage.total">
                                         </div>  
                                         <div class="form-group">
                                             <label>Monthly Usage (Days a Month)</label>
-                                            <input type="text" placeholder="" class="form-control"ng-model="application.resources.servers.usage.monthly">
+                                            <input type="text" placeholder="" class="form-control"ng-model="application.servers.usage.monthly">
                                         </div>
                                         <div class="form-group">
                                             <label>Daily Usage (Hours a Day)</label>
-                                            <input type="text" placeholder="" class="form-control"ng-model="application.resources.servers.usage.daily">
+                                            <input type="text" placeholder="" class="form-control"ng-model="application.servers.usage.daily">
                                         </div>                                        
                                     </div>
                                 </div>
@@ -179,15 +179,15 @@
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis perferendis, odio repellendus ipsum atque quod unde nisi, impedit totam minima. Sed quae impedit eligendi ab. Accusamus quo dolor sequi aliquid!</p>
                                     <div class="form-group">
                                         <label>Shared Storage (GB)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.shared">
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.storage.shared">
                                     </div>  
                                     <div class="form-group">
                                         <label>Network Storage (GB)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.network">
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.storage.network">
                                     </div>  
                                     <div class="form-group">
                                         <label>Cloud Storage (GB)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.storage.cloud">
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.storage.cloud">
                                     </div>                                       
                             
                             </div>
@@ -196,15 +196,15 @@
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis perferendis, odio repellendus ipsum atque quod unde nisi, impedit totam minima. Sed quae impedit eligendi ab. Accusamus quo dolor sequi aliquid!</p>
                                     <div class="form-group">
                                         <label>Bandwidth (GB/Month)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.network.bandwidth">
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.network.bandwidth">
                                     </div>  
                                     <div class="form-group">
                                         <label>Inbound (GB/Month)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.network.inbound">
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.network.inbound">
                                     </div>  
                                     <div class="form-group">
                                         <label>Outbound (GB/Month)</label>
-                                        <input type="text" placeholder="" class="form-control" ng-model="application.resources.network.outbound">
+                                        <input type="text" placeholder="" class="form-control" ng-model="application.network.outbound">
                                     </div>                                       
                             </div>
                             <div id="wizardStep6" ng-show="currentStep == 6">

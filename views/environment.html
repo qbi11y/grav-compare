@@ -1,7 +1,19 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 text-right">
-            <button class="btn btn-primary">Add Resource</button>
+            <button class="btn btn-success">Add Resource</button>
+        </div>
+    </div>
+    <h1>{{ environment.name }}</h1>
+    <div class="row" ng-repeat="(key, value) in environment track by $index" ng-if="key != 'name'">
+        <div class="col-xs-12">
+            <h3>{{ key }}</h3>
+            <div ng-repeat="item in value track by $index | limitTo: 1">
+                <div ng-repeat="(label, labelValue) in item track by $index" class="form-group">
+                    <label>{{ label }}</label>
+                    <span>{{ labelValue }}</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
