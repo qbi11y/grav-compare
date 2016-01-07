@@ -10,13 +10,12 @@ app.controller('IndexCtrl',['$scope', 'Applications', function($scope, Applicati
         Applications.addApp(app);
         $scope.applications = Applications.getApps();
     }
-    console.log('index');
 }]);
 
 app.controller('ApplicationCtrl', ['$scope', '$state', '$stateParams', 'Applications', function($scope, $state, $stateParams, Applications) {
-    //console.log(Applications.getApp($stateParams.id));
     $scope.currentStep = 1;
     $scope.application = Applications.getApp($stateParams.id);
+    $scope.enviroToDelete = '';
     $scope.showEnviro = function(enviro) {
         Applications.setEnviro(enviro)
         $state.go('environment')
@@ -24,13 +23,17 @@ app.controller('ApplicationCtrl', ['$scope', '$state', '$stateParams', 'Applicat
     $scope.createEnvironment = function(enviro) {
         Applications.addEnviro($stateParams.id, enviro);
     }
-    $scope.removeEnvironment = function(enviro) {
-        console.log('enviro to remove ', enviro);
-        Applications.removeEnviro($stateParams.id, enviro);
+    $scope.removeEnvironment = function() {
+        Applications.removeEnviro($stateParams.id, $scope.enviroToDelete);
+    }
+    $scope.confirmDelete = function(appID, enviro) {
+        $scope.enviroToDelete = enviro;
+    }
+    $scope.clearEnvironmentDelete = function() {
+        $scope.enviroToDelete = '';
     }
 }]);
 
 app.controller('EnviroCtrl', ['$scope', '$stateParams', 'Applications', function($scope, $stateParams, Applications) {
-    console.log(Applications.getEnviro())
     $scope.environment = Applications.getEnviro();
 }])

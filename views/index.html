@@ -70,6 +70,10 @@
                                         Create application based on existing application
                                     </label>
                                 </div>
+
+
+
+                                
                                 <div ng-show="newApplication == 'new'">
                                     <div class="form-group">
                                         <input type="text" placeholder="Enter Application Name" class="form-control" ng-model="application.name">
@@ -82,6 +86,12 @@
                                         <p class="help-block">Description and example of what an environment is</p>
                                     </div>
                                 </div>
+
+
+
+
+
+
                                 <div ng-show="newApplication == 'existing'">
                                     <div class="form-group">
                                         <select class="form-control" ng-model="application.duplicate" ng-init="application.duplicate = '0'">

@@ -1,7 +1,6 @@
 var app = angular.module('AppName', ['ui.router', 'Controllers']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
-  //
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/");
   //
@@ -23,6 +22,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
       url: "/environment",
       templateUrl: "views/environment.html",
       controller: "EnviroCtrl"
+    })
+
+    .state('report', {
+      url: "/report",
+      templateUrl: "views/report.html",
+      controller: "ReportCtrl"
     })
 });
 
